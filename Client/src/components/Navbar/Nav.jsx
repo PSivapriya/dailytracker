@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { NavbarMenu } from "../Data/data";
 import { MobileIcon } from "./NavbarStyle";
@@ -8,9 +8,9 @@ import { Login } from "../Register/Login";
 import ErrorBoundary from "../Error/ErrorBoundary";
 
 const Nav = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [showSignup, setShowSignup] = React.useState(false);
-    const [showLogin, setShowLogin] =React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
+    const [showLogin, setShowLogin] =useState(false);
 
   return (
     <nav className="bg-white py-4 shadow">

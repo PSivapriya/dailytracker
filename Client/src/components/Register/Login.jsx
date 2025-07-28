@@ -2,10 +2,11 @@ import axios from "axios";
 import { useContext, useState } from "react"
 // import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const Login = ({setShowLogin}) =>{
     const [formData, setFormData] = useState({name:"",email:"",password:""});
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const {setUser} = useContext(AuthContext);
     //console.log('AuthContext:', useContext(AuthContext));
     const handleSubmit = async(e) =>{
@@ -17,18 +18,21 @@ export const Login = ({setShowLogin}) =>{
             email:formData.email,
             password: formData.password,
             },{
-                headers:{"Content-Type":"application/json"}
+                headers:{"Content-Type":"application/json"}, withCredentials: true
             });
              console.log("Login response:", res.data); 
             if(res.data.accessToken){
                 localStorage.setItem("accessToken", res.data.accessToken);
-                localStorage.setItem("refreshToken", res.data.refreshToken);
+                //localStorage.setItem("refreshToken", res.data.refreshToken);
                 setUser({
                     id: res.data.user._id,
                     name: res.data.user.name,
                     email: res.data.user.email,
                 });
                 alert("Login Successfully");
+                if(setShowLogin)
+                    setShowLogin(false);
+                navigate("/user")
                 //setShowLogin(false);
             } else {
             alert("Login failed: " + res.data.message);
@@ -59,7 +63,7 @@ export const Login = ({setShowLogin}) =>{
                 </div>
                 <div className="p-4">
                     <button className="bg-secondary text-white w-full py-2 rounded font-semibold hover:bg-third">Submit</button>
-                    <p className="text-sm text-center">Don't have an account? <a href="#" className="text-blue-500 hover:underline">SignUp</a></p>
+                    <p className="text-sm text-center">Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">SignUp</a></p>
                 </div>
             </form>
         </div>

@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/users'); 
 const habitRoutes = require("./routes/habit");
-const cors = require('cors');
+const dailylogRoutes = require("./routes/dailylog");
+const cors = require("cors");
 const app = express();
 const authRouter = require('./routes/auth');
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter); // ✅ Now handled by your users.js file
 app.use("/api/habits",habitRoutes);
+app.use("/api/dailylogs",dailylogRoutes);
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -8,6 +8,6 @@ const habitSchema = new mongoose.Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref:"User", required: true},
     streak: {type: Number, default:0},
     completionHistory: [String],
-});
+},{timestamps:true});
 
 module.exports = mongoose.model("Habit",habitSchema);

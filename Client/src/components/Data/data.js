@@ -15,17 +15,17 @@ export const NavbarMenu = [
     {
         id: 2,
         title:"Blogs",
-        link:'#'
+        link:'/blogs'
     },
     {
         id: 3,
         title:"Contacts",
-        link:'#'
+        link:'/contacts'
     },
     {
         id: 4,
         title:"About",
-        link:''
+        link:'/about'
     },
     {
         id: 5,
@@ -90,24 +90,29 @@ export const UserMenu = [
         link:'/'
     },
     {
-        id: 2,
-        title:"Our Schedule",
-        link:'#'
+        id:2,
+        title:"Dashboard",
+        link:"/userHome"
     },
     {
         id: 3,
-        title:"Manage Habits",
-        link:'#'
+        title:"Our Schedule",
+        link:'/ourSchedule'
     },
     {
         id: 4,
-        title:"History",
-        link:''
+        title:"Manage Habits",
+        link:'/manageHabits'
     },
     {
         id: 5,
+        title:"History",
+        link:'/history'
+    },
+    {
+        id: 6,
         title:"Daily activities",
-        link:''
+        link:'/dailyActivities'
     }
 ];
 
@@ -133,6 +138,204 @@ export const successQuotes = [
 ];
 
 export const Schedule={
+    SchoolStud:{
+        weekday:[
+            { time: "6:00 AM", activity:"Wake up & Freshen up"},
+            { time: "6:30 AM", activity:"Morning Exercise/Yoga"},
+            { time: "7:00 AM", activity:"Breakfast"},
+            { time: "7:30 AM", activity:"Revise yesterday homeworks"},
+            { time: "8:30 AM", activity:"Get ready for school"},
+            { time: "9:00 AM - 4:00 PM", activity:"School hours"},
+            { time: "4:30 PM -5:00 PM", activity:"Snacks & Rest"},
+            { time: "6:00 PM", activity:"Playtime / Extracurricular ativities"},
+            { time: "7:00 PM", activity:"Study"},
+            { time: "8:00 PM", activity:"Dinner & Family time"},
+            { time: "9:00 PM", activity:"Preparation for next day"},
+            { time: "9:30 - 10:00 PM", activity:"Go to sleep"},
+        ],
+         weekend:[
+            { time: "7:00 AM", activity:"Wakeup & breakfast"},
+            { time: "8:00 AM", activity:"Extra homework/ Assignments"},
+            { time: "10:00 Am", activity:"Outdoor activities"},
+            { time: "12:30 PM", activity:"Lunch"},
+            { time: "1:30 PM", activity:"Take rest"},
+            { time: "2:00 PM", activity:"Indoor Activities"},
+            { time: "4:00 PM", activity:"Assignment/ Study"},
+            { time: "6:00 PM", activity:"Family outing / Enterntainment"},
+            { time: "8:00 PM", activity:"Dinner"},
+            { time: "9:00 PM", activity:"Self Care"},
+            { time: "9:30 PM - 10:00 PM", activity:"Sleep"},
+        ]
+    },
+     CollegeStud:{
+        weekday:[
+            { time: "6:00 AM", activity:"Wake up & Freshen up"},
+            { time: "6:30 AM", activity:"Morning Exercise/Yoga"},
+            { time: "7:00 AM", activity:"Breakfast"},
+            { time: "7:30 AM", activity:"Check Schedule"},
+            { time: "8:30 AM", activity:"Get ready for College"},
+            { time: "9:00 AM - 4:00 PM", activity:"College hours"},
+            { time: "4:30 PM -5:00 PM", activity:"Snacks & Rest"},
+            { time: "5:00 PM", activity:"Internship/ Skill-building"},
+            { time: "7:00 PM", activity:"Indoor activities"},
+            { time: "8:00 PM", activity:"Dinner & Family time"},
+            { time: "9:00 PM", activity:"Study & Assignments"},
+            { time: "11:00 PM", activity:"Relaxation"},
+            { time: "11:30 PM", activity:"Sleep"},
+        ],
+         weekend:[
+            { time: "8:00 AM", activity:"Wakeup & breakfast"},
+            { time: "9:00 AM", activity:"Extra homework/ Assignments"},
+            { time: "12:00 Am", activity:"Skill building"},
+            { time: "1:30 PM", activity:"Lunch"},
+            { time: "2:00 PM", activity:"Indoor Activities"},
+            { time: "5:00 PM", activity:"Assignment/ Study"},
+            { time: "7:00 PM", activity:"Family outing / leisure"},
+            { time: "9:00 PM", activity:"Self Care/ Extra task"},
+            { time: "10:30 PM", activity:"Sleep"},
+        ]
+    },
+     Prof_9to5_shift:{
+        weekday:[
+            { time: "6:30 AM", activity:"Wake up & Freshen up"},
+            { time: "7:00 AM", activity:"Morning Exercise/Yoga"},
+            { time: "7:30 AM", activity:"Breakfast"},
+            { time: "8:00 AM", activity:"Check Schedule"},
+            { time: "8:30 AM", activity:"Get ready for work"},
+            { time: "9:00 AM - 5:00 PM", activity:"Work hours"},
+            { time: "5:30 PM", activity:"Snacks & Rest"},
+            { time: "6:30 PM", activity:"Hobby/Family time"},
+            { time: "7:30 PM", activity:"Dinner"},
+            { time: "8:00 PM", activity:"Skill building"},
+            { time: "9:30 PM", activity:"Meditation/ SelfCare"},
+            { time: "10:30 PM", activity:"Sleep"},
+        ],
+         weekend:[
+            { time: "7:30 AM", activity:"Wakeup & breakfast"},
+            { time: "8:00 AM", activity:"Leisure / Exercise"},
+            { time: "10:00 Am", activity:"Skill building"},
+            { time: "1:00 PM", activity:"Lunch"},
+            { time: "2:00 PM", activity:"Indoor Activities / Family time"},
+            { time: "5:00 PM", activity:"Planning for next week"},
+            { time: "6:00 PM", activity:"leisure"},
+            { time: "8:00 PM", activity:"Dinner & Entertainment"},
+            { time: "10:30 PM", activity:"Sleep"},
+        ]
+    },
+     Prof_ngtshift:{
+        weekday:[
+            { time: "7:00 AM", activity:"Reach home, light breakfast"},
+            { time: "7:30 AM", activity:"Relaxation"},
+            { time: "8:30 AM", activity:"Sleep"},
+            { time: "3:30 PM", activity:"Wake up & Freshen up"},
+            { time: "4:00 PM", activity:"Exercise / Short Walk"},
+            { time: "4:30 PM", activity:"Meditaion / Self Care"},
+            { time: "6:30 PM", activity:"Hobby/Family time"},
+            { time: "5:00 PM", activity:"Brunch / heavy meals"},
+            { time: "6:00 PM", activity:"Family time /Skill building"},
+            { time: "7:30 PM", activity:"Get Ready for Work"},
+            { time: "9:00 PM - 6:00 AM", activity:"Work hours"},
+        ],
+         weekend:[
+            { time: "7:00 AM", activity:"Reach home, light breakfast"},
+            { time: "7:30 AM", activity:"Relaxation"},
+            { time: "8:30 AM", activity:"Sleep"},
+            { time: "3:30 PM", activity:"Wake up & Freshen up"},
+            { time: "4:00 PM", activity:"Exercise / Short Walk"},
+            { time: "4:30 PM", activity:"Meditaion / Self Care"},
+            { time: "6:30 PM", activity:"Hobby/Family time"},
+            { time: "5:00 PM", activity:"Brunch / heavy meals"},
+            { time: "6:00 PM", activity:"Family time /Skill building"},
+            { time: "7:30 PM", activity:"Get Ready for Work"},
+            { time: "9:00 PM - 6:00 AM", activity:"Work hours / Sleep"},
+        ]
+    },
+     Prof_rotationalshift:{
+        DayShift:{
+            weekday:[
+            { time: "4:30 AM", activity:"Wake up & Freshen up"},
+            { time: "5:00 AM", activity:"Morning Exercise/Yoga"},
+            { time: "5:30 AM", activity:"Breakfast & Get ready for work"},
+            { time: "6:00 AM", activity:"Start Work"},
+            { time: "10:00 AM", activity:"Snacks & hydration"},
+            { time: "2:00 PM", activity:"Finish work"},
+            { time: "3:00 PM", activity:"Lunch"},
+            { time: "3:30 PM", activity:"Short nap"},
+            { time: "5:00 PM", activity:"Family time"},
+            { time: "7:30 PM", activity:"Dinner"},
+            { time: "8:00 PM", activity:"Skill building"},
+            {time: "10:00 PM", activity:"Sleep"},
+        ],
+         weekend:[
+            { time: "7:30 AM", activity:"Wakeup & breakfast"},
+            { time: "8:00 AM", activity:"Leisure / Exercise"},
+            { time: "10:00 Am", activity:"Skill building"},
+            { time: "1:00 PM", activity:"Lunch"},
+            { time: "2:00 PM", activity:"Indoor Activities / Family time"},
+            { time: "5:00 PM", activity:"Planning for next week"},
+            { time: "6:00 PM", activity:"leisure"},
+            { time: "8:00 PM", activity:"Dinner & Entertainment"},
+            { time: "10:30 PM", activity:"Sleep"},
+        ]
+        },
+        Afternoonshift:{
+        weekday:[
+            { time: "7:30 AM", activity:"Wake up & Freshen up"},
+            { time: "8:00 AM", activity:"Morning Exercise/Yoga"},
+            { time: "8:30 AM", activity:"Breakfast"},
+            { time: "9:00 AM", activity:"Skill building"},
+            { time: "12:30 PM", activity:"Lunch"},
+            { time: "1:00 PM", activity:"Get ready for Work"},
+            { time: "2:00 PM", activity:"Start work"},
+            { time: "6:00 PM", activity:"Short snack time"},
+            { time: "10:00 PM", activity:"End work"},
+            { time: "10:30 PM", activity:"Dinner"},
+            { time: "11:00 PM", activity:"Meditation/ SelfCare"},
+            { time: "12:30 PM", activity:"Sleep"},
+        ],
+         weekend:[
+            { time: "8:30 AM", activity:"Wakeup & breakfast"},
+            { time: "9:00 AM", activity:"Leisure / Exercise"},
+            { time: "10:00 Am", activity:"Skill building"},
+            { time: "1:00 PM", activity:"Lunch"},
+            { time: "2:00 PM", activity:"Indoor Activities / Family time"},
+            { time: "5:00 PM", activity:"Planning for next week"},
+            { time: "6:00 PM", activity:"leisure"},
+            { time: "8:00 PM", activity:"Dinner & Entertainment"},
+            { time: "10:30 PM", activity:"Sleep"},
+        ]
+    },
+    nightShift:{
+         weekday:[
+            { time: "7:00 AM", activity:"Reach home, light breakfast"},
+            { time: "7:30 AM", activity:"Relaxation"},
+            { time: "8:30 AM", activity:"Sleep"},
+            { time: "3:30 PM", activity:"Wake up & Freshen up"},
+            { time: "4:00 PM", activity:"Exercise / Short Walk"},
+            { time: "4:30 PM", activity:"Meditaion / Self Care"},
+            { time: "6:30 PM", activity:"Hobby/Family time"},
+            { time: "5:00 PM", activity:"Brunch / heavy meals"},
+            { time: "6:00 PM", activity:"Family time /Skill building"},
+            { time: "7:30 PM", activity:"Get Ready for Work"},
+            { time: "9:00 PM - 6:00 AM", activity:"Work hours"},
+        ],
+         weekend:[
+            { time: "7:00 AM", activity:"Reach home, light breakfast"},
+            { time: "7:30 AM", activity:"Relaxation"},
+            { time: "8:30 AM", activity:"Sleep"},
+            { time: "3:30 PM", activity:"Wake up & Freshen up"},
+            { time: "4:00 PM", activity:"Exercise / Short Walk"},
+            { time: "4:30 PM", activity:"Meditaion / Self Care"},
+            { time: "6:30 PM", activity:"Hobby/Family time"},
+            { time: "5:00 PM", activity:"Brunch / heavy meals"},
+            { time: "6:00 PM", activity:"Family time /Skill building"},
+            { time: "7:30 PM", activity:"Get Ready for Work"},
+            { time: "9:00 PM - 6:00 AM", activity:"Work hours / Sleep"},
+        ]
+    }
+    },
+    
+Aspirants:{
     weekday: [
     { time: "6:00 AM", activity: "Wake up & hygiene" },
     { time: "6:30 AM", activity: "Exercise" },
@@ -151,4 +354,5 @@ export const Schedule={
     { time: "6:00 PM", activity: "Family time" },
     { time: "9:00 PM", activity: "Reflect on week" },
   ],
+},
 };

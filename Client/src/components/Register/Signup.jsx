@@ -9,20 +9,22 @@ export const Signup = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailRegex.test(formData.email)){
-      alert("Please enter valid email address");
-      return;
-    }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if(!emailRegex.test(formData.email)){
+    //   alert("Please enter valid email address");
+    //   return;
+    // }
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
     try{
-      const res = await fetch("http://localhost:5000/api/users/signup",{
+      // const res = await fetch("http://localhost:5000/api/users/signup",{
+       const res = await fetch("http://localhost:5000/api/users/signup",{
         method:"POST", headers:{"Content-Type": "application/json"}, 
-        body: JSON.stringify({name: formData.name, email: formData.email,password: formData.password})
+        body: JSON.stringify({name: formData.name, email: formData.email,password: formData.password}),
+        credentials:"include"
       });
 
       const data =await res.json();
@@ -31,7 +33,7 @@ export const Signup = () => {
         alert(data.message || "Signup failed");
         return;
       }
-      if (data.accessToken) {
+      if (res.ok && data.accessToken) {
           localStorage.setItem("accessToken", data.accessToken);
           const decoded= jwtDecode(data.accessToken);
           setUser({id: decoded.id, name:decoded.name, email: decoded.email}, process.env.JWT_SECRET, { expiresIn: "1d" });

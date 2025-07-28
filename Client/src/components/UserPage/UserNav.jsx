@@ -1,11 +1,15 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { UserMenu } from "../Data/data";
+import { Link, useNavigate } from 'react-router-dom';
 
 export const UserNav = ()=>{
+   const navigate = useNavigate();
+
    const handleLogout =()=>{
-      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       alert("logged out");
-      window.location.href="/login";
+      navigate("/");
    }
    
     return(
@@ -20,7 +24,7 @@ export const UserNav = ()=>{
             <ul className="hidden md:flex items-center space-x-2">
                {UserMenu.map((item) =>{
                   return <li key={item.id}>
-                    <a href={item.link} className="py-1 py-3 hover:text-secondary ">{item.title}</a>
+                    <Link to={item.link} className="py-1 py-3 hover:text-secondary ">{item.title}</Link>
                     </li>
                })
             }

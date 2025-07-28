@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-// import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import daily from '../assets/daily.png'
 import axiosInstance from "../utils/axiosInstance";
 
 const UserHome = () =>{
     const {user} = useContext(AuthContext);
     const [habits, setHabits] = useState([]);
+    const [dailyLogs, setDailyLogs] =useState([]);
     const [completedToday, setCompletedToday] = useState(0);
     const [topStreak, setTopStreak] = useState({name:"", streak:0});
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() =>{
         const fetchHabits = async ()=>{
@@ -19,22 +20,58 @@ const UserHome = () =>{
                     headers: {Authorization: `Bearer ${token}`,},
                 });
 
-                const habits = res.data.habits || [];
-                setHabits(habits);
+                const data = res.data || [];
+                setHabits(data);
+
+                const logsRes =await axiosInstance.get(`http://localhost:5000/api/dailylogs`,{
+                    headers : {Authoriztion : `Bearer ${token}`},
+                });
+                const logsData = logsRes.data || [];
+                setDailyLogs(logsData);
 
                 const today = new Date().toISOString().split("T")[0];
-                const Completed = habits.filter((habit) => habit.completionHistory?.includes(today));
-                setCompletedToday(Completed.length);
+            
+                // completed today
+                const completedLogs =logsData.filter((log) =>
+                    (typeof log.date ==="string" && log.date.startsWith(today)) && log.status ==="Completed" );
 
-                let  maxStreak =0;
-                let topHabit ="";
-                habits.forEach((habit) => {
-                    if(habit.streak > maxStreak){
-                        maxStreak = habit.streak;
-                        topHabit = habit.name;
-                    }
+                setCompletedToday(completedLogs.length);
+
+                //streak
+                const todayDate = new Date();
+                const habitStreaks =data.map(habit =>{
+                    const logs = logsData.filter(log=> log.habitId === habit._id && log.status === "Completed")
+                        .map(log => new Date(log.date)).sort((a,b) => b-a);
+
+                let streak=0;
+                let currentDate = new Date(todayDate);
+
+                for(let date of logs){
+                    const diff =(currentDate - date)/(1000*60*60*24);
+                    if(diff <1.5){
+                        streak++;
+                        currentDate.setDate(currentDate.getDate()-1);
+                    }else
+                        break;
+                  }
+                  return {name: habit.name, streak};
                 });
-                setTopStreak({name: topHabit, streak: maxStreak});
+
+                let topHabit = {name:"No habit", streak:0};
+                habitStreaks.forEach(h =>{
+                    if(h.streak > topHabit.streak)
+                        topHabit = h;
+                });
+                setTopStreak(topHabit);
+                // let  maxStreak =0;
+                // let topHabit ="No habit";
+                // data.forEach((habit) => {
+                //     if(habit.streak > maxStreak){
+                //         maxStreak = habit.streak;
+                //         topHabit = habit.name;
+                //     }
+                // });
+                // setTopStreak({name: topHabit, streak: maxStreak});
             }catch (error){
                 console.error("Error fetching habits",error);
             }
@@ -43,9 +80,13 @@ const UserHome = () =>{
             fetchHabits();
     },[user]);
 
-    // const handleAddHabit = () =>{
-    //     navigate("/manageHabits");
-    // }
+    const handleAddHabit = () =>{
+        navigate("/manageHabits");
+    }
+
+    const handleStart =()=>{
+        navigate("/dailyActivities")
+    }
     return(
         <div className="container grid grid-cols-2 ">
             <div className="py-16">
@@ -64,8 +105,8 @@ const UserHome = () =>{
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 py-10 gap-4 mb-6">
-                <button className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-third transition">Add New Habit</button>
-                <button className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-third transition">Start</button>
+                <button onClick={handleAddHabit} className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-third transition">Add New Habit</button>
+                <button onClick={handleStart} className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-third transition">Start</button>
             </div>
             </div>
 
@@ -78,3 +119,4 @@ const UserHome = () =>{
 
 }
 export default UserHome;
+

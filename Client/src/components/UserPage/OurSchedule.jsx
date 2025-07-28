@@ -1,53 +1,90 @@
 import { useState } from "react";
 import { Schedule } from "../Data/data";
 
-const OurSchedule =()=>{
-    const [mode,setMode] = useState("weekday");
-    const [preferences, setPreferences] = useState({startTime:"6", endTime:"21", area:"Study"});
-    const [generateSchedule, setGenerateSchedule] =useState([]);
-    
-    const userSchedule =({startTime, endTime, area})=>{
-        const generated =[];
-        let start=parseInt(startTime);
-        let end = parseInt(endTime);
-        for(let i=start;i<end;i++){
-            generated.push({time:`${i}:00`,activity: `${area} Session`});
-        }
-        return generated;
-    }
+const OurSchedule = () => {
+    const [mode, setMode] = useState("weekday");
+    const [category, setCategory] = useState("SchoolStud");
+    const [shift, setShift] = useState("");
 
-    const handleGenerate = ()=>{
-        const shown = userSchedule(preferences);
-        setGenerateSchedule(shown);
-    }
-    
-    return(
+    const availableShifts = category ==="Prof_rotationalshift" ? Object.keys(Schedule[category]):null;
+
+    const scheduleData = category ==="Prof_rotationalshift" ? (shift ? Schedule[category][shift][mode] : null) : Schedule[category][mode];
+
+    return (
         <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-3xl font-bold text-center mb-8">Our Schedule</h1>
             <div className="mb-6 flex items-center gap-4">
-                <label className="text-lg font-medium">Select Mode</label>
-                <select onChange={(e)=>setMode(e.target.value)} value={mode} className="border border-gray px-4 py-3 rounded-md">
+                <label className="text-lg font-medium">Select Category</label>
+                <select onChange={(e) => setCategory(e.target.value)} value={category} className="border border-gray px-4 py-3 rounded-md w-full">
+                    
+                    {Object.keys(Schedule).map((cat)=>(
+                        <option key={cat} value={cat}> {cat.replace(/_/g," ")} </option>
+                    ))}
+                    
+                </select>
+            </div>
+
+            {availableShifts && (
+                <div className="mb-4">
+                    <label className="block text-lg font-medium">Select Shift</label>
+                    <select value={shift} onChange={(e)=> setShift(e.target.value)} className="border px-4 py-2 rounded-md w-full">
+                        <option value=""> Select Shift </option>
+                        {availableShifts.map((sh) =>(
+                            <option key={sh} value={sh}> {sh.replace(/_/g, " ")} </option>
+                        ))}
+                    </select>
+                </div>
+            )}
+
+            <div className="mb-4">
+                <label className="block text-lg font-medium">Select Mode</label>
+                <select value={mode} onChange={(e)=> setMode(e.target.value)} className="border px-4 py-2 rounded-md w-full">
                     <option value="weekday">Weekday</option>
                     <option value="weekend">Weekend</option>
                 </select>
             </div>
 
-            <div className="bg-gray rounde-md shadow-md p-4 mb-8">
-                <h2 className="text-xl font-semibold text-center mb-4 capitalize">{mode === "weekday"?"weekday":"weekend"} Schedule</h2>
-                <ul className="space-y-2">
-                    {Schedule[mode].map((item,idx)=>(
-                        <li key={idx} className={`p-3 rounded-md ${idx%3 ===0 ?"bg-green": idx%3===1?"bg-yellow":"bg-red"}`}>{item.time}-{item.activity}</li>
-                    ))}
-                </ul>
-                <button className="bg-secondary hover:bg-third text-white font-semibold py-2 px-4 rounded">Start</button>
-            </div>
-            <hr></hr>
-
-            <div className="mt-6 flex flex-col items-center justify-center">
-                    <p className="text-lg text-gray ">Want to modify? Go to <a className="text-secondary underline cursor-pointer hover:text-third">ManageHabit</a></p>
-            </div>
+            {scheduleData ? (
+                <div className="bg-gray rounded-md shadow-md p-4">
+                    <h2 className="text-xl font-semibold text-center mb-4">
+                        {category.replace(/_/g," ")} - {shift ? `${shift} -`:""} {mode}
+                    </h2>
+                    <ul className="space-y-2">
+                        {scheduleData.map((item,idx)=>(
+                            <li key={idx} className={`p-3 rounded-md ${idx%3===0 ? "bg-green-100" : idx%3 ===1 ? "bg-yellow-100":"bg-red-100"}`}>
+                                {item.time} - {item.activity}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <p className="text-center text-gray mt-6">Please select all options to view Schedule.</p>
+            )}
+            {/* {Schedule[mode] && (
+            //     <div className="bg-gray-100 rounded-md shadow-md p-4 mb-8">
+            //         <h2 className="text-xl font-semibold text-center mb-4 capitalize">
+            //             {mode === "weekday" ? "Weekday" : "Weekend"} Schedule
+            //         </h2>
+            //         <ul className="space-y-2">
+            //             {Schedule[mode].map((item, idx) => (
+            //                 <li
+            //                     key={idx}
+            //                     className={`p-3 rounded-md ${
+            //                         idx % 3 === 0
+            //                             ? "bg-green-100"
+            //                             : idx % 3 === 1
+            //                             ? "bg-yellow-100"
+            //                             : "bg-red-100"
+            //                     }`}
+            //                 >
+            //                     {item.time} - {item.activity}
+            //                 </li>
+            //             ))}
+            //         </ul>
+            //     </div>
+            // )} */}
         </div>
-    )
-}
+    );
+};
 
 export default OurSchedule;
