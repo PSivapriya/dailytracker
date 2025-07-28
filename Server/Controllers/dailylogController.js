@@ -61,13 +61,13 @@ exports.getLogs = async (req, res) => {
     const formatted = logs.map(log => ({
       _id: log._id,
       habitId: log.habitId?._id || null,
-      habitName: log.habitId?.name || log.scheduleName || "Unnamed",
+      habitName: log.habitName || log.habitId?.name || log.scheduleName || "Unnamed",
       time: log.habitId?.time || "N/A",
       status: log.status,
       date: log.date,
       type: log.type
     }));
-        res.json(logs);
+        res.json(formatted);
     } catch (error) {
         console.error("Get logs error:", error.message);
         res.status(500).json({ error: error.message });
