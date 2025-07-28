@@ -136,10 +136,11 @@ const DailyActivities = () =>{
 const saveStatus = async (habitId, status, type = "habit") => {
     const token = localStorage.getItem("accessToken");
     const today = new Date().toISOString().split("T")[0];
+    const habitName = habits.find(h=> h._id === habitId)?.name || habitId;
     try {
         const res = await axiosInstance.post(
             `/dailylogs`,
-            { habitId, status, date: today, type },
+            { habitId,habitName, status, date: today, type },
             { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log("Saved:", res.data);
@@ -246,7 +247,8 @@ const saveStatus = async (habitId, status, type = "habit") => {
                         const scheduleKey = `${category} - ${scheduleMode} - ${idx}`;
                         return(
                             <li key={scheduleKey} className={`p-3 flex rounded-md ${idx%3 ===0 ?"bg-green-100" : idx%3===1?"bg-yellow-100":"bg-red-100"}`}>
-                                <span> {item.time} - {item.activity} </span>
+                                {/* <span> {item.time} - {item.activity} </span> */}
+                               <span className="font-medium"> {item.time? item.time: ''} - {item.activity} </span>
                                 <div className="flex gap-2 ml-auto">
                                     {statusOptions.map((status) =>(
                                          <button key={status} onClick={()=> handleStatus(scheduleKey, status, "schedule")} className={`w-8 h-8 rounded-full border-2 ${colorCircle(scheduleKey,status)}`} title={status}>
