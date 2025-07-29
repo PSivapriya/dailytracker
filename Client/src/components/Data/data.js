@@ -27,11 +27,6 @@ export const NavbarMenu = [
         title:"About",
         link:'/about'
     },
-    {
-        id: 5,
-        title:"fi",
-        link:''
-    }
 ]
 
 export const AboutHabits = [

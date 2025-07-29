@@ -115,14 +115,22 @@ const DailyActivities = () =>{
     //     type: "schedule"
     // }));
 
-    const scheduleLogs = (Schedule[category]?.[scheduleMode] || []).map((habit, idx) => ({
-    habitId: `${category} - ${scheduleMode} - ${idx}`,
-    habitName: habit.activity,
-    status: markStatus[`${category} - ${scheduleMode} - ${idx}`] || "Missed",
-    date: today,
-    type: "schedule"
-}));
-
+//     const scheduleLogs = (Schedule[category]?.[scheduleMode] || []).map((habit, idx) => ({
+//     habitId: `${category} - ${scheduleMode} - ${idx}`,
+//     habitName: habit.activity,
+//     status: markStatus[`${category} - ${scheduleMode} - ${idx}`] || "Missed",
+//     date: today,
+//     type: "schedule"
+// }));
+const scheduleLogs =
+        Schedule[category]?.[scheduleMode]?.map((habit, idx) => ({
+          habitId: `${category} - ${scheduleMode} - ${idx}`,
+          habitName: habit.activity,
+          status:
+            markStatus[`${category} - ${scheduleMode} - ${idx}`] || "Missed",
+          date: today,
+          type: "schedule",
+        })) || [];
 
     const logs =[...habitLogs,...scheduleLogs];
     const token = localStorage.getItem("accessToken");
@@ -248,7 +256,10 @@ const saveStatus = async (habitId, status, type = "habit") => {
                         return(
                             <li key={scheduleKey} className={`p-3 flex rounded-md ${idx%3 ===0 ?"bg-green-100" : idx%3===1?"bg-yellow-100":"bg-red-100"}`}>
                                 {/* <span> {item.time} - {item.activity} </span> */}
-                               <span className="font-medium"> {item.time? item.time: ''} - {item.activity} </span>
+                                <span className="font-medium">
+                                    {item.time ? `${item.time} - ` : ''}{item.activity || "Unknown Activity"}
+                                </span>
+
                                 <div className="flex gap-2 ml-auto">
                                     {statusOptions.map((status) =>(
                                          <button key={status} onClick={()=> handleStatus(scheduleKey, status, "schedule")} className={`w-8 h-8 rounded-full border-2 ${colorCircle(scheduleKey,status)}`} title={status}>

@@ -37,7 +37,7 @@ exports.logBulk = async (req, res) => {
             logs.map(log =>
                 DailyLog.findOneAndUpdate(
                     { userId: req.userId, habitId: log.habitId, date },
-                    { status: log.status, type: log.type || "habit", habitName: log.habitName },
+                    { status: log.status, type: log.type || "habit", habitName:schedule? schedule.activity : log.habitName },
                     { upsert: true, new: true, setDefaultsOnInsert: true }
                 )
             )

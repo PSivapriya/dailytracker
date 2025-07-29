@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { NavbarMenu } from "../Data/data";
 import { MobileIcon } from "./NavbarStyle";
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { Signup } from "../Register/Signup";
 import { Login } from "../Register/Login";
 import ErrorBoundary from "../Error/ErrorBoundary";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ const Nav = () => {
         </div>
           
         <div className="flex items-center">
-          <ul className="hidden md:flex items-center space-x-2">
+          <ul className="hidden md:flex text-lg items-center space-x-4">
             {NavbarMenu.map((item) =>{
                 return <li key={item.id}>
                     <a href={item.link} className="py-1 py-3 hover:text-secondary ">{item.title}</a>
@@ -63,15 +64,25 @@ const Nav = () => {
             <button className="hover:bg-third hover:text-white text-white rounded-md border-2 border-secondary bg-secondary px-1 py-0.5">Get Started</button>
         </div>
         </div>
-       <MobileIcon>
-         <FaBars className="md:hidden" onClick={()=>{setIsOpen(!isOpen)}}/>
-       </MobileIcon>
+       <MobileIcon className="md:hidden">
+        {isOpen ? (
+              <FaTimes className="text-2xl" onClick={() => setIsOpen(false)} />
+              ) : (
+                <FaBars className="text-2xl" onClick={() => setIsOpen(true)} />
+              )}      
+        </MobileIcon>
         {isOpen && (
-        <div className="absolute top-16 right-0 w-1/2 text-black">
-          <ul className="flex flex-col items-center rounded-3xl gap-6 py-4 text-lg bg-secondary">
+        <div className="md:hidden fixed top-16 left-0 w-full bg-secondary text-white shadow-lg z-40">
+          <ul className="flex flex-col items-center gap-6 py-6 text-lg">
             {NavbarMenu.map((item) => (
               <li key={item.id}>
-                <a className="bg-secondary text-white " href={item.link}>{item.title}</a>
+                <Link 
+                  to={item.link} 
+                  onClick={() => setIsOpen(false)} 
+                  className="hover:text-third"
+                >
+                  {item.title}
+                </Link>
               </li>
             ))}
           </ul>
